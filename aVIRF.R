@@ -44,8 +44,8 @@ AVIRF <- function(data, # returns
   set.seed(bootsamp)
   
   for (j in 1:bootsamp) {
-    xisamp0 <- xi[sample(nrow(xi), n.ahead), , drop = FALSE]
-    xisamp1 <- xi[sample(nrow(xi), n.ahead), , drop = FALSE]
+    xisamp0 <- xi[sample(nrow(xi), n.ahead, replace = TRUE), , drop = FALSE]
+    xisamp1 <- xi[sample(nrow(xi), n.ahead, replace = TRUE), , drop = FALSE]
     
     H_0_init <- matrix(H_t[timeforVIRF,],2,2)
     H_1_init <- matrix(H_t[timeforVIRF + 1,],2,2)
@@ -99,3 +99,6 @@ out <- AVIRF(data = data,
       n.ahead = 250,
       asym = TRUE)
 out
+
+
+
