@@ -8,8 +8,11 @@ AVIRF <- function(data, # returns
                   timeforVIRF, # time period for VIRF
                   n.ahead, # h-steps ahead forecast
                   asym = FALSE, # using a sym oder asym model?
-                  bootsamp = NULL) # Number of bootstrap samples, set NULL if it should be chosen automatically
-                  {
+                  bootsamp = NULL, # Number of bootstrap samples, set NULL if it should be chosen automatically
+                  C_boot = NULL,
+                  A_boot = NULL,
+                  G_boot = NULL,
+                  B_boot = NULL){
   
   # Check conditions
   if (is.null(B) & asym == TRUE){
@@ -42,6 +45,14 @@ AVIRF <- function(data, # returns
   VIRF <- array(0,dim = c(n.ahead,3, bootsamp))
   CIRF <- matrix(0, n.ahead, bootsamp)
   set.seed(bootsamp)
+  
+  # Parameter for pointwise bootstrap based confidence intervals
+  if (!is.null(C_boot) | !is.null(A_boot) | !is.null(G_boot) | !is.null(B_boot)){
+  C <- C_boot
+  A <- A_boot
+  G <- G_boot
+  B <- B_boot
+  }
   
   for (j in 1:bootsamp) {
     xisamp0 <- xi[sample(nrow(xi), n.ahead, replace = TRUE), , drop = FALSE]
@@ -90,15 +101,25 @@ AVIRF <- function(data, # returns
   return(result)
 }
 
-out <- AVIRF(data = data,
-      C = bekk_m1$C0,
-      G = bekk_m1$G,
-      A = bekk_m1$A,
-      B = bekk_m1$B,
-      timeforVIRF = 444,
-      n.ahead = 250,
-      asym = TRUE)
-out
-
+# # Symmetric Example
+# out <- AVIRF(data = data,
+#       C = bekk_m2$C0,
+#       G = bekk_m2$G,
+#       A = bekk_m2$A,
+#       timeforVIRF = 444,
+#       n.ahead = 250,
+#       asym = FALSE)
+# out
+# 
+# # Asymmetric Example
+# out <- AVIRF(data = data,
+#              C = bekk_m1$C0,
+#              G = bekk_m1$G,
+#              A = bekk_m1$A,
+#              B = bekk_m1$B,
+#              timeforVIRF = 444,
+#              n.ahead = 250,
+#              asym = TRUE)
+# out
 
 

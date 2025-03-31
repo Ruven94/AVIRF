@@ -17,6 +17,16 @@ matroot <- function(mat) {
   return(root)
 }
 
+matroot_chol <- function(A) {
+  # Cholesky-Zerlegung
+  L <- chol(A)
+  
+  # Matrix-Quadratwurzel berechnen: L' * L
+  A_sqrt <- t(L)
+  
+  return(A_sqrt)
+}
+
 calculate_eta <- function(e_t) {
   eta_t <- rep(0, length(e_t))
   if (all(e_t < 0)){
