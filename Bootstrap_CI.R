@@ -40,7 +40,6 @@ VIRF_result <- AVIRF(data = data,
                       simsamp = 50000)
 
 # save(VIRF_result, file = "VIRF_result.RData")
-load("Run 2/VIRF_result.RData")
 
 ### Bootstrap CI ###
 result_list <- mclapply(1:R, function(k) {
@@ -67,8 +66,6 @@ for (k in 1:R) {
 }
 
 # save(all_virfs, all_cirfs, file = "VIRF_sim_result.RData")
-load("Run 3/VIRF_sim_result_bootstrap.RData")
-# load("Run 2/VIRF_sim_result_withoutBEKK.RData")
 
 ##################
 ### Evaluation ###
